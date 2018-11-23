@@ -1,0 +1,15 @@
+spring:
+  profiles: dev
+name: dev-YAML
+server:
+  port: 8383
+fs:
+  upload-dir: ./uploads
+---
+spring:
+  profiles: prod
+name: prod-YAML
+server:
+  port: 9090
+fs:
+  upload-dir: ./uploads
