@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,10 +70,19 @@ public class ProductController {
 	}
 	
 	@PostMapping("/post/")
-	public long createClient(@RequestBody Product product) {
+	public long createProduct(@RequestBody Product product) {
 		product = productService.save(product);
 		
 		return product.getId();
 	}
 
+	
+	@PutMapping("/put/{id}")
+	public ResponseEntity modifyProduct(@PathVariable Long id, @RequestBody Product product) {
+		if (productService.put(id, product)) {
+			return new ResponseEntity("Product modify", HttpStatus.OK);
+		} else {
+			return new ResponseEntity("Failed on modify", HttpStatus.NOT_FOUND);
+		}
+	}
 }

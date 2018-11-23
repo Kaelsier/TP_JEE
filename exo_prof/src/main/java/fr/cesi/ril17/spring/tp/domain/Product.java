@@ -38,5 +38,4 @@ public class Product {
 	@ManyToOne
 	@JsonBackReference
 	private Seller seller;
-
 }

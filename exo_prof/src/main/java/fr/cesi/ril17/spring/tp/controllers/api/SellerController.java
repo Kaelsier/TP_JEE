@@ -39,7 +39,7 @@ public class SellerController {
 	@DeleteMapping("/deleteAll")
 	public ResponseEntity deleteAll() {
 		if (sellerService.deleteAll()) {
-			return new ResponseEntity("All products deleted", HttpStatus.OK);
+			return new ResponseEntity("All Sellers deleted", HttpStatus.OK);
 		} else {
 			return new ResponseEntity("Failed on delete all", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -49,12 +49,12 @@ public class SellerController {
 	public ResponseEntity deleteById(@PathVariable Long id) {
 		if (sellerService.existById(id)) {
 			if (sellerService.deleteById(id)) {
-				return new ResponseEntity("Product deleted", HttpStatus.OK);
+				return new ResponseEntity("Seller deleted", HttpStatus.OK);
 			} else {
 				return new ResponseEntity("Failed on delete", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity("Product not found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity("Seller not found", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -69,17 +69,18 @@ public class SellerController {
 	}
 
 	@PostMapping("/post/")
-	public long createClient(@RequestBody Seller seller) {
+	public long createProduct(@RequestBody Seller seller) {
 		seller = sellerService.save(seller);
 
 		return seller.getId();
 	}
 
-	//C'est pas encore fait LOL
-	@PutMapping("/modify/{id}")
-	public long modifyClient(@PathVariable Long id, @RequestBody Seller seller) {
-		/*seller = sellerService.put(id, seller);*/
-		
-		return seller.getId();
+	@PutMapping("/put/{id}")
+	public ResponseEntity modifyClient(@PathVariable Long id, @RequestBody Seller seller) {
+		if (sellerService.put(id, seller)) {
+			return new ResponseEntity("Seller modify", HttpStatus.OK);
+		} else {
+			return new ResponseEntity("Failed on modify", HttpStatus.NOT_FOUND);
+		}
 	}
 }

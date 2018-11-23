@@ -66,18 +66,34 @@ public class ProductService {
 			return false;
 		}
 	}
-	
+
 	public boolean existById(Long id) {
 		return productRepo.existsById(id);
 	}
-	
+
 	public boolean existsBySeller_id(Long id) {
 		return productRepo.existsBySeller_id(id);
 	}
 
 	public Product save(Product product) {
 		productRepo.save(product);
-
+		
 		return product;
+	}
+
+	public Boolean put(Long id, Product product) {
+		if (productRepo.existsById(id)) {
+
+			Optional<Product> productBase = productRepo.findById(id);
+			product.setCreated_on(productBase.get().getCreated_on());
+			try {
+				productRepo.save(product);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

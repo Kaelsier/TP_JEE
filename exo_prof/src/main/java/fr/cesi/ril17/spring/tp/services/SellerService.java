@@ -72,4 +72,17 @@ public class SellerService {
 		return seller;
 	}
 
+	public Boolean put(Long id, Seller seller) {
+		if (sellerRepo.existsById(id)) {
+			try {
+				sellerRepo.save(seller);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
